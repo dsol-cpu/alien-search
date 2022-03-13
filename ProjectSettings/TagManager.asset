@@ -4,11 +4,12 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - File Path Field
   - Wall
   - Ground
   - ComputerScreen
   - PasswordUI
+  - Monitors
+  - InstructionsPanel
   layers:
   - Default
   - TransparentFX

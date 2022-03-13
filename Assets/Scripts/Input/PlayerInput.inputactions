@@ -33,19 +33,19 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Zoom",
-                    "type": "Button",
-                    "id": "201151b0-924f-4701-8a5f-5d9e61e126c9",
-                    "expectedControlType": "Button",
+                    "name": "Look",
+                    "type": "PassThrough",
+                    "id": "aa8de0c2-4af7-4afc-b71c-d12ae0dedeb0",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Look",
-                    "type": "PassThrough",
-                    "id": "aa8de0c2-4af7-4afc-b71c-d12ae0dedeb0",
-                    "expectedControlType": "Vector2",
+                    "name": "Camera Lock",
+                    "type": "Button",
+                    "id": "b22b0538-2585-46bb-bfb9-3299cca38ba8",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -55,7 +55,7 @@
                 {
                     "name": "",
                     "id": "02885c0f-2ba1-4956-a1a2-94e135255be3",
-                    "path": "<Keyboard>/ctrl",
+                    "path": "<Keyboard>/leftShift",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -131,23 +131,23 @@
                 },
                 {
                     "name": "",
-                    "id": "617cf25c-b4dc-4aaa-95e8-0ae1ac000c85",
-                    "path": "<Mouse>/scroll",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Zoom",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "fe674d3f-7af3-4a12-8a64-e1c907eb8e0d",
                     "path": "<Mouse>/delta",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7d97ca55-dcbb-4002-b79c-df5a23bec112",
+                    "path": "<Keyboard>/leftAlt",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Camera Lock",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

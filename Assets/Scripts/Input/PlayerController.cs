@@ -5,21 +5,16 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour, PlayerInput.IPlayerActions
 {
-   
-
     [Header("Camera")]
     Rigidbody rb;
     Transform cameraObject;
-    Vector2 cameraInput;
-    public float zoomInput;
+    Vector2 zoomInput;
     Vector2 delta;
-
-
 
     [Header("Input Flags")]
     [SerializeField] private bool sprinting;
     [SerializeField] private bool interacting;
-
+    [SerializeField] private bool cameraLock;
 
     [Header("Movement")]
     Vector2 movementInput;
@@ -31,8 +26,6 @@ public class PlayerController : MonoBehaviour, PlayerInput.IPlayerActions
     [SerializeField] private float runningSpeed = 5f;
     [SerializeField] private float walkingSpeed = 3f;
     [SerializeField] private float rotationSpeed = 5f;
-
-
 
     void Awake()
     {
@@ -50,6 +43,8 @@ public class PlayerController : MonoBehaviour, PlayerInput.IPlayerActions
 
             playerInput.Player.Sprint.performed += ctx => OnSprint(ctx);
             playerInput.Player.Sprint.canceled += ctx => OnSprint(ctx);
+
+            playerInput.Player.CameraLock.performed += ctx => OnCameraLock(ctx);
         }
         playerInput.Player.Enable();
     }
@@ -62,10 +57,6 @@ public class PlayerController : MonoBehaviour, PlayerInput.IPlayerActions
     {
 
     }
-
-    // Update is called once per frame
-
-
     private void Movement()
     {
         hCurrent = movementInput.x;
@@ -96,9 +87,9 @@ public class PlayerController : MonoBehaviour, PlayerInput.IPlayerActions
         }
 
         rb.velocity = movement;
-        Rotation();
+        if(movement != Vector3.zero)
+            Rotation();
     }
-
 
     private void Rotation()
     {
@@ -115,7 +106,6 @@ public class PlayerController : MonoBehaviour, PlayerInput.IPlayerActions
     public void OnMove(InputAction.CallbackContext context)
     {
         movementInput = context.ReadValue<Vector2>();
-        print("moving");
     }
 
     public void OnSprint(InputAction.CallbackContext context)
@@ -127,22 +117,22 @@ public class PlayerController : MonoBehaviour, PlayerInput.IPlayerActions
     {
         interacting = context.action.triggered;
     }
+    public void OnLook(InputAction.CallbackContext context)
+    {
+        if(!cameraLock)
+            delta = context.ReadValue<Vector2>();
+    }
 
+    public void OnCameraLock(InputAction.CallbackContext context)
+    {
+        cameraLock = context.action.triggered;
+    }
+
+    // Update is called once per frame
     void Update()
     {
         Movement();
     }
 
-    public void OnLook(InputAction.CallbackContext context)
-    {
-        cameraInput = context.ReadValue<Vector2>();
-    }
-
-    public void OnZoom(InputAction.CallbackContext context)
-    {
-        zoomInput = context.ReadValue<float>();
-    }
-
 
 }
-
