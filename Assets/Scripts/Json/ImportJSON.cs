@@ -8,12 +8,14 @@ public class ImportJSON : MonoBehaviour
     private Object[] textures;
     private GameObject screenParent, buttonParent;
     private JsonReadWrite read;
+    private Text passwordLoad;
 
-    private void Awake()
+    void Awake()
     {
         read = new JsonReadWrite();
         screenParent = GameObject.Find("Monitors").gameObject;
-        buttonParent = GameObject.Find("PasswordPanel").gameObject;
+        buttonParent = GameObject.FindGameObjectWithTag("PasswordUI").gameObject;
+        passwordLoad = GameObject.FindGameObjectWithTag("Password").GetComponent<Text>();
     }
 
     void Start()
@@ -26,22 +28,15 @@ public class ImportJSON : MonoBehaviour
         DirectoryInfo filePath = new DirectoryInfo(Application.dataPath + "/Art/Textures");
         FileInfo[] fileName = filePath.GetFiles();
         List<UFOSighting> list = read.DeserializeToMap(Application.dataPath + "/Scripts/UFO Sightings.json");
-
         int randomEntry = 0;
+        string password = "";
         for (int i = 0; i < 6; i++)
         {
             randomEntry = Random.Range(0, list.Count);
-/*            foreach (FileInfo file in fileName)
-            {
-
-                if (file.Name == list[randomEntry].Shape)
-                {
-                    print("File search works!");
-                    Object image = Resources.Load(file.Name + file.Extension);
-                    screenParent.transform.Find("Screen " + i).GetComponent<Renderer>().material.mainTexture = (Texture2D)image;
-                    buttonParent.transform.Find("Button (" + i + ")").GetComponent<Button>().image = (Image)image;
-                }
-            }*/
+            buttonParent.transform.Find("Button (" + i + ")").GetComponentInChildren<Button>().GetComponentInChildren<Text>().text = list[randomEntry].Shape;
+            password += list[randomEntry].Shape;
         }
+        passwordLoad.text = password;
     }
 }
+
