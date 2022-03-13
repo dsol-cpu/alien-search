@@ -1,21 +1,38 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour,PlayerInput.IPlayerActions
+public class PlayerController : MonoBehaviour, PlayerInput.IPlayerActions
 {
+   
+
+    [Header("Camera")]
     Rigidbody rb;
     Transform cameraObject;
+    Vector2 cameraInput;
+    public float zoomInput;
+    Vector2 delta;
+
+
+
+    [Header("Input Flags")]
+    [SerializeField] private bool sprinting;
+    [SerializeField] private bool interacting;
+
 
     [Header("Movement")]
     Vector2 movementInput;
-    Vector2 cameraInput;
     PlayerInput playerInput;
-    bool sprinting;
     private float moveAmount;
+    float hCurrent, vCurrent;
+
     [SerializeField] private float sprintingSpeed = 7f;
     [SerializeField] private float runningSpeed = 5f;
     [SerializeField] private float walkingSpeed = 3f;
+    [SerializeField] private float rotationSpeed = 5f;
+
+
 
     void Awake()
     {
@@ -29,6 +46,8 @@ public class PlayerController : MonoBehaviour,PlayerInput.IPlayerActions
         {
             playerInput = new PlayerInput();
             playerInput.Player.Move.performed += ctx => OnMove(ctx);
+            playerInput.Player.Move.canceled += ctx => OnMove(ctx);
+
             playerInput.Player.Sprint.performed += ctx => OnSprint(ctx);
             playerInput.Player.Sprint.canceled += ctx => OnSprint(ctx);
         }
@@ -45,15 +64,12 @@ public class PlayerController : MonoBehaviour,PlayerInput.IPlayerActions
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        Movement();
-    }
+
 
     private void Movement()
     {
-        float hCurrent = movementInput.x;
-        float vCurrent = movementInput.y;
+        hCurrent = movementInput.x;
+        vCurrent = movementInput.y;
 
         moveAmount = Mathf.Clamp01(Mathf.Abs(hCurrent) + Mathf.Abs(vCurrent));
 
@@ -80,23 +96,53 @@ public class PlayerController : MonoBehaviour,PlayerInput.IPlayerActions
         }
 
         rb.velocity = movement;
-        //print(movement);
+        Rotation();
     }
 
-    public void OnLooking(UnityEngine.InputSystem.InputAction.CallbackContext context)
+
+    private void Rotation()
+    {
+        Vector3 targetDirection = cameraObject.forward * vCurrent + cameraObject.right * hCurrent;
+        targetDirection.Normalize();
+        targetDirection.y = 0;
+        Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
+        Quaternion playerRotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+
+        if (movementInput.x != 0 || movementInput.y != 0)
+            transform.rotation = playerRotation;
+    }
+
+    public void OnMove(InputAction.CallbackContext context)
+    {
+        movementInput = context.ReadValue<Vector2>();
+        print("moving");
+    }
+
+    public void OnSprint(InputAction.CallbackContext context)
+    {
+        sprinting = context.action.triggered;
+    }
+
+    public void OnInteract(InputAction.CallbackContext context)
+    {
+        interacting = context.action.triggered;
+    }
+
+    void Update()
+    {
+        Movement();
+    }
+
+    public void OnLook(InputAction.CallbackContext context)
     {
         cameraInput = context.ReadValue<Vector2>();
     }
 
-    public void OnMove(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    public void OnZoom(InputAction.CallbackContext context)
     {
-        movementInput = context.ReadValue<Vector2>();
-        print("moving"); 
+        zoomInput = context.ReadValue<float>();
     }
 
-    public void OnSprint(UnityEngine.InputSystem.InputAction.CallbackContext context)
-    {
-        sprinting = context.action.triggered;
-        print("sprinting");
-    }
+
 }
+

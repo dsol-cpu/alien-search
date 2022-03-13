@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class ExportJSON : MonoBehaviour
 {
-    public void Save() {
+    public void Save() 
+    {
         JsonReadWrite write = new JsonReadWrite();
         write.SerializeToJson();
     }

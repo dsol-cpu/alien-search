@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - File Path Field
+  - Wall
+  - Ground
+  - ComputerScreen
+  - PasswordUI
   layers:
   - Default
   - TransparentFX

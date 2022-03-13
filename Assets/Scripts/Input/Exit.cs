@@ -5,7 +5,7 @@ using UnityEngine;
 public class Exit : MonoBehaviour
 {
     // Start is called before the first frame update
-    void Awake()
+    public void Quit()
     {
         Application.Quit();
     }

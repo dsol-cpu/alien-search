@@ -200,7 +200,7 @@ Transform:
   - {fileID: 5032918585028868724}
   - {fileID: 3954435603144156783}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &319538845
 GameObject:
@@ -214,6 +214,7 @@ GameObject:
   - component: {fileID: 319538849}
   - component: {fileID: 319538848}
   - component: {fileID: 319538847}
+  - component: {fileID: 319538850}
   m_Layer: 5
   m_Name: ExitBtn
   m_TagString: Untagged
@@ -284,7 +285,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 319538848}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 319538850}
+        m_TargetAssemblyTypeName: Exit, Assembly-CSharp
+        m_MethodName: Quit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &319538848
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -323,6 +336,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 319538845}
   m_CullTransparentMesh: 1
+--- !u!114 &319538850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 319538845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a3ff0ca5162da849b231cb18c34ff83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &329629772
 GameObject:
   m_ObjectHideFlags: 0
@@ -834,7 +859,7 @@ Transform:
   - {fileID: 329629773}
   - {fileID: 566631253}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &963194225
 GameObject:
@@ -913,8 +938,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: -0.023314297, y: -0.0000000010751066, z: -2.5072172e-11, w: 0.9997282}
-  m_LocalPosition: {x: -16.76, y: 6.3, z: -61}
+  m_LocalRotation: {x: -0.023314297, y: 0.0000000010751066, z: 2.5072172e-11, w: 0.9997282}
+  m_LocalPosition: {x: -16.76, y: 7.1, z: -61}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1013,8 +1038,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1070293255}
-  m_LocalRotation: {x: -0.023314297, y: -0.0000000010751066, z: -2.5072172e-11, w: 0.9997282}
-  m_LocalPosition: {x: -16.76, y: 6.3, z: -61}
+  m_LocalRotation: {x: -0.023314297, y: 0.0000000010751066, z: 2.5072172e-11, w: 0.9997282}
+  m_LocalPosition: {x: -16.76, y: 7.1, z: -61}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 1496029886}
@@ -1492,7 +1517,7 @@ Transform:
   - {fileID: 7880681349696542028}
   - {fileID: 5383331494615758418}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1948649212
 GameObject:
@@ -1703,6 +1728,7 @@ GameObject:
   - component: {fileID: 1985648720}
   - component: {fileID: 1985648719}
   - component: {fileID: 1985648724}
+  - component: {fileID: 1985648723}
   m_Layer: 0
   m_Name: PlaceholderUFO
   m_TagString: Player
@@ -1781,13 +1807,29 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1985648718}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -16.76, y: 6.3, z: -46}
+  m_LocalPosition: {x: -16.76, y: 7.1, z: -46}
   m_LocalScale: {x: 4, y: 0.7, z: 4}
   m_Children:
   - {fileID: 586334465}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1985648723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1985648718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b416db7a6032a744bb9174145f246477, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sprintingSpeed: 7
+  runningSpeed: 5
+  walkingSpeed: 3
+  rotationSpeed: 15
 --- !u!54 &1985648724
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1926,7 +1968,7 @@ Transform:
   - {fileID: 1729776006840836306}
   - {fileID: 8403784765443160159}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &832149485688782824
 GameObject:
@@ -2028,7 +2070,7 @@ GameObject:
   m_Component:
   - component: {fileID: 543450652206934631}
   m_Layer: 0
-  m_Name: rhombus3DChallenge
+  m_Name: MiscClutter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
