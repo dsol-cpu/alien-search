@@ -14,7 +14,6 @@ public class PlayerController : MonoBehaviour, PlayerInput.IPlayerActions
     [Header("Input Flags")]
     [SerializeField] private bool sprinting;
     [SerializeField] private bool interacting;
-    [SerializeField] private bool cameraLock;
 
     [Header("Movement")]
     Vector2 movementInput;
@@ -22,10 +21,10 @@ public class PlayerController : MonoBehaviour, PlayerInput.IPlayerActions
     private float moveAmount;
     float hCurrent, vCurrent;
 
-    [SerializeField] private float sprintingSpeed = 7f;
-    [SerializeField] private float runningSpeed = 5f;
-    [SerializeField] private float walkingSpeed = 3f;
-    [SerializeField] private float rotationSpeed = 5f;
+    [SerializeField] private float sprintingSpeed = 15f;
+    [SerializeField] private float runningSpeed = 7f;
+    [SerializeField] private float walkingSpeed = 5f;
+    [SerializeField] private float rotationSpeed = 2f;
 
     void Awake()
     {
@@ -43,8 +42,6 @@ public class PlayerController : MonoBehaviour, PlayerInput.IPlayerActions
 
             playerInput.Player.Sprint.performed += ctx => OnSprint(ctx);
             playerInput.Player.Sprint.canceled += ctx => OnSprint(ctx);
-
-            playerInput.Player.CameraLock.performed += ctx => OnCameraLock(ctx);
         }
         playerInput.Player.Enable();
     }
@@ -119,13 +116,7 @@ public class PlayerController : MonoBehaviour, PlayerInput.IPlayerActions
     }
     public void OnLook(InputAction.CallbackContext context)
     {
-        if(!cameraLock)
-            delta = context.ReadValue<Vector2>();
-    }
-
-    public void OnCameraLock(InputAction.CallbackContext context)
-    {
-        cameraLock = context.action.triggered;
+        delta = context.ReadValue<Vector2>();
     }
 
     // Update is called once per frame
@@ -133,6 +124,4 @@ public class PlayerController : MonoBehaviour, PlayerInput.IPlayerActions
     {
         Movement();
     }
-
-
 }

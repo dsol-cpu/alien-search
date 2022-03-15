@@ -10,28 +10,24 @@ public class CheckPsswrdBtnListener : MonoBehaviour
 
     void Awake()
     {
-        textBox = this.gameObject.GetComponent<Text>(); ;
+        textBox = this.gameObject.GetComponent<Text>();
         password = GameObject.FindGameObjectWithTag("Password").GetComponent<Text>().text;
     }
 
     public void onClick()
     {
-        if (this.gameObject.GetComponent<Button>().image.color != Color.blue)
+        if (password == textBox.text)
         {
-
-            if (password == textBox.text)
+            textBox.text = "Finish!";
+        }
+        else
+        {
+            textBox.text = "";
+            for (int i = 0; i < 6; i++)
             {
-                textBox.text = "Finish!";
-            }
-            else
-            {
-                textBox.text = "";
-                for (int i = 0; i < 6; i++)
-                {
-                    Button b = GameObject.FindGameObjectWithTag("PasswordUI").transform.Find("Button (" + i + ")").GetComponentInChildren<Button>();
+                Button b = GameObject.FindGameObjectWithTag("PasswordUI").transform.Find("Button (" + i + ")").GetComponentInChildren<Button>();
 
-                    b.image.color = Color.white;
-                }
+                b.image.color = Color.white;
             }
         }
     }
