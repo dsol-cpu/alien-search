@@ -20,6 +20,7 @@ jobs:
           key: Library-WebGL
           restore-keys: |
             Library-
+
       - name: Unity - Builder
         uses: game-ci/unity-builder@v4
         env:
@@ -32,20 +33,34 @@ jobs:
           buildsPath: build
 
       - name: Upload Build Artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-artifact@v3
         with:
+          name: WebGL-Build
           path: build/WebGL/Build
 
   deploy:
+    name: Deploy to GitHub Pages
     needs: build
     runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      - name: Checkout `gh-pages` branch
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+
+      - name: Download Build Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: WebGL-Build
+          path: ./build
+
       - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+        run: |
+          rm -rf ./*
+          mv build/WebGL/Build/* .
+          touch .nojekyll  # Ensures GitHub Pages doesn’t process files like Jekyll
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "Deploy Unity WebGL build to GitHub Pages" || echo "No changes to commit"
+          git push origin gh-pages

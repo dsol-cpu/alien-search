@@ -62,3 +62,6 @@ crashlytics-build.properties
 # Builds
 *.apk
 *.unitypackage
+
+#VSCode
+.history/
