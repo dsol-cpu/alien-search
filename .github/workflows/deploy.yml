@@ -43,15 +43,25 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout main branch
+        uses: actions/checkout@v4
+
+      - name: Create `gh-pages` branch if it doesn't exist
+        run: |
+          if ! git ls-remote --exit-code --heads origin gh-pages; then
+            git checkout --orphan gh-pages
+            git rm -rf .
+            touch .nojekyll
+            git add .nojekyll
+            git commit -m "Initial commit for GitHub Pages"
+            git push origin gh-pages
+          fi
+
       - name: Checkout `gh-pages` branch
         uses: actions/checkout@v4
         with:
           ref: gh-pages
-          # Fallback to creating gh-pages if it doesn't exist
           fetch-depth: 0
-      - name: Create `gh-pages` branch if not exists
-        run: |
-          git checkout gh-pages || git checkout -b gh-pages
 
       - name: Download Build Artifact
         uses: actions/download-artifact@v3
@@ -63,7 +73,7 @@ jobs:
         run: |
           rm -rf ./*
           mv build/WebGL/Build/* .
-          touch .nojekyll  # Ensures GitHub Pages doesn’t process files like Jekyll
+          touch .nojekyll  # Prevents GitHub Pages from processing files as Jekyll content
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add .
