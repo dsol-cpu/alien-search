@@ -47,6 +47,11 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: gh-pages
+          # Fallback to creating gh-pages if it doesn't exist
+          fetch-depth: 0
+      - name: Create `gh-pages` branch if not exists
+        run: |
+          git checkout gh-pages || git checkout -b gh-pages
 
       - name: Download Build Artifact
         uses: actions/download-artifact@v3
