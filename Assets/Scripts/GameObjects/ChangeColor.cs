@@ -1,6 +1,3 @@
-using Cinemachine;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ChangeColor : MonoBehaviour //Add color feedback when stepping on pad next to UFO
