@@ -35,7 +35,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: WebGL-Build
-          path: build/WebGL/WebGL # Include the nested WebGL folder
+          path: build/WebGL/WebGL
 
   deploy:
     name: Deploy to GitHub Pages
@@ -75,9 +75,14 @@ jobs:
       - name: List files for debugging
         run: ls -la
 
-      - name: Move files to root if in subdirectory
+      - name: Clean and move files
         run: |
+          # Remove existing directories if they exist
+          rm -rf Build TemplateData
+
+          # Move files from WebGL directory
           if [ -d "WebGL" ]; then
+            # Move all files and directories from WebGL to root
             mv WebGL/* .
             rm -rf WebGL
           fi
