@@ -38,6 +38,9 @@ jobs:
           name: WebGL-Build
           path: build/WebGL/Build
 
+      - name: List build directory
+        run: ls -R build
+
   deploy:
     name: Deploy to GitHub Pages
     needs: build
