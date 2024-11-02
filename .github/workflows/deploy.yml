@@ -35,7 +35,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: WebGL-Build
-          path: build/WebGL
+          path: build/WebGL/WebGL # Include the nested WebGL folder
 
   deploy:
     name: Deploy to GitHub Pages
@@ -71,6 +71,16 @@ jobs:
         with:
           name: WebGL-Build
           path: .
+
+      - name: List files for debugging
+        run: ls -la
+
+      - name: Move files to root if in subdirectory
+        run: |
+          if [ -d "WebGL" ]; then
+            mv WebGL/* .
+            rm -rf WebGL
+          fi
 
       - name: Ensure .nojekyll exists
         run: touch .nojekyll
