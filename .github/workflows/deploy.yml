@@ -46,6 +46,11 @@ jobs:
       - name: Checkout main branch
         uses: actions/checkout@v4
 
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
       - name: Create `gh-pages` branch if it doesn't exist
         run: |
           if ! git ls-remote --exit-code --heads origin gh-pages; then
@@ -68,11 +73,6 @@ jobs:
         with:
           name: WebGL-Build
           path: ./build
-
-      - name: Configure Git
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Deploy to GitHub Pages
         run: |
