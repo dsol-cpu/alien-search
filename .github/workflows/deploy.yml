@@ -35,7 +35,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: WebGL-Build
-          path: build/WebGL/Build
+          path: build/WebGL
 
   deploy:
     name: Deploy to GitHub Pages
@@ -45,39 +45,16 @@ jobs:
       - name: Checkout main branch
         uses: actions/checkout@v4
 
-      - name: Configure Git
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-      - name: Create `gh-pages` branch if it doesn't exist
-        run: |
-          if ! git ls-remote --exit-code --heads origin gh-pages; then
-            git checkout --orphan gh-pages
-            git rm -rf .
-            touch .nojekyll
-            git add .nojekyll
-            git commit -m "Initial commit for GitHub Pages"
-            git push origin gh-pages
-          fi
-
-      - name: Checkout `gh-pages` branch
-        uses: actions/checkout@v4
-        with:
-          ref: gh-pages
-          fetch-depth: 0
-
       - name: Download Build Artifact
         uses: actions/download-artifact@v3
         with:
           name: WebGL-Build
-          path: ./build
+          path: build/WebGL
 
       - name: Deploy to GitHub Pages
-        run: |
-          rm -rf ./*
-          mv build/WebGL/Build/* .
-          touch .nojekyll  # Prevents GitHub Pages from processing files as Jekyll content
-          git add .
-          git commit -m "Deploy Unity WebGL build to GitHub Pages" || echo "No changes to commit"
-          git push origin gh-pages
+        uses: peaceiris/github-pages-deploy-action@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: build/WebGL
+          force_orphan: true
